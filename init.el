@@ -30,10 +30,10 @@ values."
      git
      markdown
      org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
-     spell-checking
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
+     ;; spell-checking
      syntax-checking
      python
      ;; version-control
@@ -42,7 +42,9 @@ values."
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '()
+   dotspacemacs-additional-packages '(deft
+                                      youdao-dictionary
+                                      org-page)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -257,7 +259,57 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  )
+  (setq org-startup-indented t)
+
+  (use-package deft
+    :bind ("<f8>" . deft)
+    :commands (deft)
+    :config (setq deft-directory "~/Work/Tips/"
+                  deft-use-filename-as-title t
+                  deft-use-filter-string-for-filename t))
+
+  (use-package youdao-dictionary
+    :bind ("C-c y" . youdao-dictionary-search-at-point)
+    :init (setq youdao-dictionary-search-history-file "~/.emacs.d/.youdao"
+                push "*Youdao Dictionary*" popwin:special-display-config)
+    :config (setq url-automatic-caching t))
+
+
+  (defun my-org-screenshot ()
+    "Take a screenshot into a time stamped unique-named file in the
+same directory as the org-buffer and insert a link to this file."
+    (interactive)
+    (org-display-inline-images)
+    (setq filename
+          (concat
+           (make-temp-name
+            (concat (file-name-nondirectory (buffer-file-name))
+                    "_imgs/"
+                    (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
+    (unless (file-exists-p (file-name-directory filename))
+      (make-directory (file-name-directory filename)))
+                                        ; take screenshot
+    (if (eq system-type 'darwin)
+        (progn
+          (call-process-shell-command "screencapture" nil nil nil nil " -s " (concat
+                                                                              "\"" filename "\"" ))
+          (call-process-shell-command "convert" nil nil nil nil (concat "\"" filename "\" -resize  \"50%\"" ) (concat "\"" filename "\"" ))
+          ))
+    (if (eq system-type 'gnu/linux)
+        (call-process "import" nil nil nil filename))
+                                        ; insert into file if correctly taken
+    (if (file-exists-p filename)
+        (insert (concat "[[file:" filename "]]")))
+    (org-display-inline-images)
+    )
+
+  (global-set-key (kbd "C-c s c") 'my-org-screenshot)
+
+  (use-package org-page
+    :init (setq op/repository-directory "/home/wrydz/static_blog"
+                op/site-domain "https://github.com/wrydz/wrydz.github.io"
+                op/personal-disqus-shortname "wrydz"))
+)
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -266,7 +318,7 @@ you should place your code here."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/GTD/"))))
+ '(org-agenda-files nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
