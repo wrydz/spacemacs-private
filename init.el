@@ -266,6 +266,8 @@ you should place your code here."
     :bind ("<f8>" . deft)
     :commands (deft)
     :config (setq deft-directory "~/Work/Tips/"
+                  deft-extensions '("org" "txt" "text" "markdown" "md")
+                  deft-recursive t
                   deft-use-filename-as-title t
                   deft-use-filter-string-for-filename t))
 
@@ -298,6 +300,7 @@ same directory as the org-buffer and insert a link to this file."
           ))
     (if (eq system-type 'gnu/linux)
         (call-process "import" nil nil nil filename))
+        ;; (call-process-shell-command "scrot" nil nil nil nil " -scd 10 " filename))
                                         ; insert into file if correctly taken
     (if (file-exists-p filename)
         (insert (concat "[[file:" filename "]]")))
