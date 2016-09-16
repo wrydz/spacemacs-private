@@ -262,6 +262,24 @@ explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
   (setq org-startup-indented t)
 
+  ;; gtd
+  (setq org-agenda-files '("~/GTD"))
+  (setq org-log-done 'time)
+  (setq org-refile-targets
+        '((nil :level . 2)
+          (org-agenda-files :maxlevel . 9)))
+  ;; (setq org-default-notes-file (concat org-directory "~/GTD/gtd.org"))
+  (setq org-capture-templates
+        '(("t" "Todo" entry (file+headline "~/GTD/gtd.org" "Inbox")
+           "* TODO %?\n %i\n %a")
+          ("j" "Journal" entry (file+datetree "~/org/journal.org")
+           "* %?\nEntered on %U\n %i\n %a")))
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "NEXT(n)" "|"  "DONE(d)")
+          (sequence "WAITING(w@/!)" "SOMEDAY(s)" "|" "HOLD(h@/!)" "CANCELLED(c@/!)")
+          (sequence "INBOX(i)" "|" "NOTE(e)" "PHONE(p)" "MEETING(m)")
+          (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")))
+
   (use-package deft
     :bind ("<f8>" . deft)
     :commands (deft)
@@ -311,7 +329,7 @@ same directory as the org-buffer and insert a link to this file."
 
   (use-package org-page
     :init (setq op/repository-directory "/home/wrydz/static_blog"
-                op/site-domain "https://github.com/wrydz/wrydz.github.io"
+                op/site-domain "https://wrydz.github.io"
                 op/personal-disqus-shortname "wrydz"))
 )
 
@@ -322,7 +340,7 @@ same directory as the org-buffer and insert a link to this file."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(org-agenda-files nil))
+)
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
