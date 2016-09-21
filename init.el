@@ -18,6 +18,7 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
+     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -45,7 +46,9 @@ values."
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(deft
                                       youdao-dictionary
-                                      org-page)
+                                      org-page
+                                      blog-admin
+                                      org-octopress)
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -235,7 +238,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup t
    ))
 
 (defun dotspacemacs/user-init ()
@@ -295,6 +298,25 @@ you should place your code here."
                 push "*Youdao Dictionary*" popwin:special-display-config)
     :config (setq url-automatic-caching t))
 
+  (use-package blog-admin
+    :init
+    (progn
+      (setq blog-admin-backend-path "~/static-blog")
+      (setq blog-admin-backend-type 'hexo)
+      (setq blog-admin-backend-new-post-in-drafts t) ;; create new post in drafts by default
+      (setq blog-admin-backend-new-post-with-same-name-dir t) ;; create same-name directory with new post
+      (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
+      ))
+
+  (use-package org-octopress
+    :init
+    (progn
+      (setq org-octopress-directory-top       "~/static-blog/source")
+      (setq org-octopress-directory-posts     "~/static-blog/source/_posts")
+      (setq org-octopress-directory-org-top   "~/static-blog/blog")
+      (setq org-octopress-directory-org-posts "~/static-blog/blog/archives")
+      (setq org-octopress-setup-file          "~/org-sty/setupfile.org")
+      ))
 
   (defun my-org-screenshot ()
     "Take a screenshot into a time stamped unique-named file in the
