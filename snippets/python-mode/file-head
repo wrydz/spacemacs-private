@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: file-head
+# key: fh
+# --
+
+#!/urs/bin/env python
+# -*- coding: utf-8 -*-
+
+################################################################
+# function : ${1:This is a python script !}
+# author   : wrydz
+# email    : wrydzfiying@163.com
+# date     : `(format-time-string "%Y-%m-%d %T")`
+################################################################
+
+$0

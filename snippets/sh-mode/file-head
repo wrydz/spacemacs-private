@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: file-head 
+# key: fh
+# --
+#!/bin/bash
+
+##################################################################
+# function : ${1:this is a shell script !}
+# author   : wrydz
+# email    : wrydzfiying@163.com
+# date     : `(format-time-string "%Y-%m-%d %T")`
+##################################################################
+
+$0

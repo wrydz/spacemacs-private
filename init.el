@@ -285,7 +285,7 @@ you should place your code here."
   (use-package deft
     :bind ("<f8>" . deft)
     :commands (deft)
-    :config (setq deft-directory "~/Work/Tips/"
+    :config (setq deft-directory "~/Documents/Tips/"
                   deft-extensions '("org" "txt" "text" "markdown" "md")
                   deft-recursive t
                   deft-use-filename-as-title t
