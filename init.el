@@ -38,14 +38,14 @@ values."
      syntax-checking
      python
      html
+     deft
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(deft
-                                      youdao-dictionary
+   dotspacemacs-additional-packages '(youdao-dictionary
                                       blog-admin
                                       )
    ;; A list of packages and/or extensions that will not be install and loaded.
@@ -282,14 +282,12 @@ you should place your code here."
           (sequence "INBOX(i)" "|" "NOTE(e)" "PHONE(p)" "MEETING(m)")
           (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")))
 
-  (use-package deft
-    :bind ("<f8>" . deft)
-    :commands (deft)
-    :config (setq deft-directory "~/Documents/Tips/"
-                  deft-extensions '("org" "txt" "text" "markdown" "md")
-                  deft-recursive t
-                  deft-use-filename-as-title t
-                  deft-use-filter-string-for-filename t))
+  ;; config deft layer
+  (setq deft-directory "~/Documents/Tips/")
+  (setq deft-extensions '("org" "txt" "text" "markdown" "md"))
+  (setq deft-recursive t)
+  (setq deft-use-filename-as-title t)
+  (setq deft-use-filter-string-for-filename t)
 
   (use-package youdao-dictionary
     :bind ("C-c y" . youdao-dictionary-search-at-point)
@@ -329,7 +327,7 @@ same directory as the org-buffer and insert a link to this file."
           ))
     (if (eq system-type 'gnu/linux)
         (call-process "import" nil nil nil filename))
-        ;; (call-process-shell-command "scrot" nil nil nil nil " -scd 10 " filename))
+    ;; (call-process-shell-command "scrot" nil nil nil nil " -scd 10 " filename))
                                         ; insert into file if correctly taken
     (if (file-exists-p filename)
         (insert (concat "[[file:" filename "]]")))
@@ -338,7 +336,7 @@ same directory as the org-buffer and insert a link to this file."
 
   (global-set-key (kbd "C-c s c") 'my-org-screenshot)
 
-)
+  )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -347,7 +345,7 @@ same directory as the org-buffer and insert a link to this file."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-)
+ )
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
