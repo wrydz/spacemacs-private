@@ -18,15 +18,17 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
-     yaml
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
      ;; <M-m f e R> (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      ivy
+     yaml
      auto-completion
-     better-defaults
+     (better-defaults :variables
+                      better-defaults-move-to-beginning-of-code-first t
+                      better-defaults-move-to-end-of-code-first t)
      emacs-lisp
      git
      markdown
@@ -34,20 +36,20 @@ values."
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-     ;; spell-checking
-     syntax-checking
+     spell-checking
+     (syntax-checking :variables
+                      spell-checking-enable-by-default nil)
      python
      html
      deft
+     wrydz
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(youdao-dictionary
-                                      blog-admin
-                                      )
+   dotspacemacs-additional-packages '()
    ;; A list of packages and/or extensions that will not be install and loaded.
    dotspacemacs-excluded-packages '()
    ;; If non-nil spacemacs will delete any orphan packages, i.e. packages that
@@ -262,7 +264,10 @@ layers configuration.
 This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
-  (setq org-startup-indented t)
+
+  ;; config deft layer
+  (setq deft-directory "~/Documents/Tips/")
+  (setq deft-recursive t)
 
   ;; gtd
   (setq org-agenda-files '("~/GTD"))
@@ -281,30 +286,6 @@ you should place your code here."
           (sequence "WAITING(w@/!)" "SOMEDAY(s)" "|" "HOLD(h@/!)" "CANCELLED(c@/!)")
           (sequence "INBOX(i)" "|" "NOTE(e)" "PHONE(p)" "MEETING(m)")
           (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")))
-
-  ;; config deft layer
-  (setq deft-directory "~/Documents/Tips/")
-  (setq deft-extensions '("org" "txt" "text" "markdown" "md"))
-  (setq deft-recursive t)
-  (setq deft-use-filename-as-title t)
-  (setq deft-use-filter-string-for-filename t)
-
-  (use-package youdao-dictionary
-    :bind ("C-c y" . youdao-dictionary-search-at-point)
-    :init (setq youdao-dictionary-search-history-file "~/.emacs.d/.youdao"
-                push "*Youdao Dictionary*" popwin:special-display-config)
-    :config (setq url-automatic-caching t))
-
-  (use-package blog-admin
-    :init
-    (progn
-      (setq blog-admin-backend-path "~/static-blog")
-      (setq blog-admin-backend-type 'hexo)
-      (setq blog-admin-backend-new-post-in-drafts t) ;; create new post in drafts by default
-      (setq blog-admin-backend-new-post-with-same-name-dir t) ;; create same-name directory with new post
-      (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
-      ))
-
   (defun my-org-screenshot ()
     "Take a screenshot into a time stamped unique-named file in the
 same directory as the org-buffer and insert a link to this file."
@@ -314,11 +295,11 @@ same directory as the org-buffer and insert a link to this file."
           (concat
            (make-temp-name
             (concat (file-name-nondirectory (buffer-file-name))
-                    "_imgs/"
+                    "s/"
                     (format-time-string "%Y%m%d_%H%M%S_")) ) ".png"))
     (unless (file-exists-p (file-name-directory filename))
       (make-directory (file-name-directory filename)))
-                                        ; take screenshot
+    ;; take screenshot
     (if (eq system-type 'darwin)
         (progn
           (call-process-shell-command "screencapture" nil nil nil nil " -s " (concat
@@ -327,8 +308,7 @@ same directory as the org-buffer and insert a link to this file."
           ))
     (if (eq system-type 'gnu/linux)
         (call-process "import" nil nil nil filename))
-    ;; (call-process-shell-command "scrot" nil nil nil nil " -scd 10 " filename))
-                                        ; insert into file if correctly taken
+    ;; insert into file if correctly taken
     (if (file-exists-p filename)
         (insert (concat "[[file:" filename "]]")))
     (org-display-inline-images)
