@@ -2,8 +2,7 @@
 # name: file-head
 # key: fh
 # --
-
-#!/urs/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 ################################################################
