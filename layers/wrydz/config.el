@@ -5,3 +5,5 @@
 ;; use American English as ispell default dictionary
 (ispell-change-dictionary "american" t)
 
+(add-hook 'org-mode-hook 'iimage-mode)
+

@@ -29,3 +29,26 @@
                                                      (int-to-string index)
                                                      "."
                                                      suffix))))
+
+(defun screenshot(shot-type)
+  ""
+  (interactive "sPlease input type of shot a/s/f : ")
+  (lower-frame)
+  (let ((filename (concat (format-time-string "%Y%m%d%H%M%S")  ".png"))
+        (filepath (concat (getenv "HOME")
+                          "/.org-images/"
+                          (file-name-base (buffer-file-name)))))
+    (unless (file-exists-p filepath)
+      (mkdir filepath "p"))
+    ;; (shell-command (concat "scrot " filepath "/" filename))
+    (call-process-shell-command "shutter" nil nil nil nil
+                                (concat " -"
+                                        shot-type
+                                        " -o "
+                                        filepath
+                                        "/"
+                                        filename
+                                        " --min_at_startup -e"))
+    (insert (concat "[[file:"filepath "/" filename "][capture]]"))
+    (org-display-inline-images)
+    ))

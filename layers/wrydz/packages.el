@@ -30,7 +30,8 @@
 ;;; Code:
 
 (defconst wrydz-packages
-  '(youdao-dictionary
+  '(
+    youdao-dictionary
     blog-admin
     org
     org-pomodoro
@@ -82,6 +83,7 @@
       (setq org-refile-targets
             '((nil :maxlevel . 4)
               (org-agenda-files :maxlevel . 4)))
+      (setq org-image-actual-width '(600))
 
       (setq-default org-agenda-dir "~/org-notes")
       (setq org-agenda-file-note (expand-file-name "notes.org" org-agenda-dir))
