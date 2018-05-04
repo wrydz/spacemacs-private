@@ -52,3 +52,105 @@
     (insert (concat "[[file:"filepath "/" filename "][capture]]"))
     (org-display-inline-images)
     ))
+
+(defvar wrydz/pandoc-input-list '(commonmark
+                                  docbook
+                                  docx
+                                  epub
+                                  haddock
+                                  html
+                                  json
+                                  latex
+                                  markdown
+                                  markdown_github
+                                  markdown_mmd
+                                  markdown_phpextra
+                                  markdown_strict
+                                  mediawiki
+                                  native
+                                  odt
+                                  opml
+                                  org
+                                  rst
+                                  t2t
+                                  textile
+                                  twiki))
+
+(defvar wrydz/pandoc-output-list '(asciidoc
+                                   beamer
+                                   commonmark
+                                   context
+                                   docbook
+                                   docbook5
+                                   docx
+                                   dokuwiki
+                                   dzslides
+                                   epub
+                                   epub3
+                                   fb2
+                                   haddock
+                                   html
+                                   html5
+                                   icml
+                                   json
+                                   latex
+                                   man
+                                   markdown
+                                   markdown_github
+                                   markdown_mmd
+                                   markdown_phpextra
+                                   markdown_strict
+                                   mediawiki
+                                   native
+                                   odt
+                                   opendocument
+                                   opml
+                                   org
+                                   plain
+                                   revealjs
+                                   rst
+                                   rtf
+                                   s5
+                                   slideous
+                                   slidy
+                                   tei
+                                   texinfo
+                                   textile
+                                   zimwiki))
+
+(defun wrydz/pandoc-convert(from-file-name from-type to-file-name to-type)
+  (if (and (wrydz/doc-type-exists-p from-type wrydz/pandoc-input-list)
+           (wrydz/doc-type-exists-p to-type wrydz/pandoc-output-list))
+      (call-process-shell-command "pandoc" nil nil nil nil
+                                  (concat " -f "
+                                          from-type
+                                          " -t "
+                                          to-type
+                                          " -o "
+                                          to-file-name
+                                          " "
+                                          from-file-name))
+    (error "error, not support file type"))
+  )
+
+
+(defun wrydz/doc-type-exists-p(doc-type doc-type-list)
+  (setq exists nil)
+  (loop for one-type in doc-type-list do
+        (if (eql one-type doc-type)
+            (setq exists t)))
+  exists)
+
+
+(defun wrydz/pandoc-convert-org-to-docx()
+  (interactive)
+  (let ((file-name (buffer-name))
+        (convert-file-name (concat (file-name-base file-name) ".docx")))
+    (save-buffer file-name)
+    (wrydz/pandoc-convert file-name 'org convert-file-name 'docx)))
+
+
+(defun wrydz/netease-music-api-docker-start()
+  (interactive)
+  (call-process-shell-command "docker" nil nil nil nil
+                              "run -d -p 3000:3000 pengxiao/netease-music-api"))

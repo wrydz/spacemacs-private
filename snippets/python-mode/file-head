@@ -3,7 +3,7 @@
 # key: fh
 # --
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
+# _*_ coding: utf-8 _*_
 
 ################################################################
 # function : ${1:This is a python script !}

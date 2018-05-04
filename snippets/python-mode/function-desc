@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: function-desc
+# key: fde
+# --
+
+"""${1:Function Description}
+
+${2:Args:
+    $3}
+
+${4:Returns:
+    $5}
+
+${6:Raises:
+    $7}
+"""
+$0

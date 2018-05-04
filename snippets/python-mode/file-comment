@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: file-comment
+# key: fc
+# --
+\"\"\"
+   author:    wrydz
+   version:   ${1:1.0}
+   date:      `(format-time-string "%Y-%m-%d %T")`
+   email:     wrydzfiying@163.com
+   filename:  `(file-name-nondirectory (buffer-file-name))`
+   function:  ${2:this is function file!}
+\"\"\"
+
+$0

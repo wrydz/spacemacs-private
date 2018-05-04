@@ -36,6 +36,7 @@
     org
     org-pomodoro
     (sqlformat :location local)
+    (netease-music :location local)
     ;; (sqlformat :fetcher github :repo "steckerhalter/sqlformat.el")
     ))
 
@@ -44,6 +45,16 @@
     :init
     (spacemacs/set-leader-keys "aff" 'sqlformat)
     ))
+
+(defun wrydz/init-netease-music()
+  (use-package netease-music
+    :init
+    (progn
+      (setq netease-music-username "1_15828651672")
+      (setq netease-music-password "123456wr")
+      (setq netease-music-user-id "1442643196")
+      (setq netease-music-api "http://localhost:3000")
+      )))
 
 (defun wrydz/init-blog-admin()
   (use-package blog-admin
@@ -83,7 +94,7 @@
       (setq org-refile-targets
             '((nil :maxlevel . 4)
               (org-agenda-files :maxlevel . 4)))
-      (setq org-image-actual-width '(600))
+      ;; (setq org-image-actual-width '(600))
 
       (setq-default org-agenda-dir "~/org-notes")
       (setq org-agenda-file-note (expand-file-name "notes.org" org-agenda-dir))
@@ -98,6 +109,36 @@
         (spacemacs/set-leader-keys-for-major-mode 'org-agenda-mode
           "." 'spacemacs/org-agenda-transient-state/body)
         )
+
+
+      (setq org-todo-keywords
+            (quote ((sequence "TODO(t)" "NEXT(n)" "SOMEDAY(s)" "|" "DONE(d)" )
+                    (sequence "WAITING(w@/!)" "HOLD(h@/!)" "|" "CANCELLED(c@/!)" "PHONE" "MEETING"))))
+
+      (setq org-todo-keyword-faces
+            (quote (("TODO" :foreground "red" :weight bold)
+                    ("NEXT" :foreground "blue" :weight bold)
+                    ("DONE" :foreground "forest green" :weight bold)
+                    ("WAITING" :foreground "orange" :weight bold)
+                    ("HOLD" :foreground "magenta" :weight bold)
+                    ("CANCELLED" :foreground "forest green" :weight bold)
+                    ("MEETING" :foreground "forest green" :weight bold)
+                    ("PHONE" :foreground "forest green" :weight bold))))
+      (setq org-use-fast-todo-selection t)
+      (setq org-todo-state-tags-triggers
+            (quote (("CANCELLED" ("CANCELLED" . t))
+                    ("WAITING" ("WAITING" . t))
+                    ("HOLD" ("WAITING") ("HOLD" . t))
+                    (done ("WAITING") ("HOLD"))
+                    ("TODO" ("WAITING") ("CANCELLED") ("HOLD"))
+                    ("NEXT" ("WAITING") ("CANCELLED") ("HOLD"))
+                    ("DONE" ("WAITING") ("CANCELLED") ("HOLD")))))
+
+      (setq org-tag-alist
+            (quote ((:startgroup)
+                    ("@home" . ?h)
+                    ("@office" . ?o))))
+
       ;; the %i would copy the selected text into the template
       ;;http://www.howardism.org/Technical/Emacs/journaling-org.html
       ;;add multi-file journal
@@ -108,11 +149,10 @@
               ("n" "notes" entry (file+headline org-agenda-file-note "Quick notes")
                "* %?\n  %i\n %U"
                :empty-lines 1)
-              ("b" "Blog Ideas" entry (file+headline org-agenda-file-note "Blog Ideas")
-               "* TODO [#B] %?\n  %i\n %U"
+              ("i" "Ideas" entry (file+headline org-agenda-file-note "Ideas")
+               "* SOMEDAY [#B] %?\n  %i\n %U"
                :empty-lines 1)
-              ("s" "Code Snippet" entry
-               (file org-agenda-file-code-snippet)
+              ("s" "Code Snippet" entry (file org-agenda-file-code-snippet)
                "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")
               ("w" "work" entry (file+headline org-agenda-file-gtd "Cocos2D-X")
                "* TODO [#A] %?\n  %i\n %U"
@@ -123,8 +163,7 @@
               ("l" "links" entry (file+headline org-agenda-file-note "Quick notes")
                "* TODO [#C] %?\n  %i\n %a \n %U"
                :empty-lines 1)
-              ("j" "Journal Entry"
-               entry (file+datetree org-agenda-file-journal)
+              ("j" "Journal Entry" entry (file+datetree org-agenda-file-journal)
                "* %?"
                :empty-lines 1)))
 
