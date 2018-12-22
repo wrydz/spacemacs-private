@@ -36,7 +36,9 @@
     org
     org-pomodoro
     (sqlformat :location local)
-    (netease-music :location local)
+    (company-english-helper :location local)
+    (insert-translated-name :location local)
+    ;; (netease-music :location local)
     ;; (sqlformat :fetcher github :repo "steckerhalter/sqlformat.el")
     ))
 
@@ -46,15 +48,30 @@
     (spacemacs/set-leader-keys "aff" 'sqlformat)
     ))
 
-(defun wrydz/init-netease-music()
-  (use-package netease-music
+
+(defun wrydz/init-company-english-helper()
+  (use-package company-english-helper
     :init
-    (progn
-      (setq netease-music-username "1_15828651672")
-      (setq netease-music-password "123456wr")
-      (setq netease-music-user-id "1442643196")
-      (setq netease-music-api "http://localhost:3000")
-      )))
+    ;; (spacemacs/set-leader-keys "aec" 'toggle-company-english-helper)
+    (global-set-key (kbd "C-c e h") 'toggle-company-english-helper)
+    ))
+
+(defun wrydz/init-insert-translated-name()
+  (use-package insert-translated-name
+    :init
+    ;; (spacemacs/set-leader-keys "aet" 'insert-translated-name-insert)
+    (global-set-key (kbd "C-c e t") 'insert-translated-name-insert)
+    ))
+
+;; (defun wrydz/init-netease-music()
+;;   (use-package netease-music
+;;     :init
+;;     (progn
+;;       (setq netease-music-username "1_15828651672")
+;;       (setq netease-music-password "123456wr")
+;;       (setq netease-music-user-id "1442643196")
+;;       (setq netease-music-api "http://localhost:3000")
+;;       )))
 
 (defun wrydz/init-blog-admin()
   (use-package blog-admin
@@ -89,6 +106,7 @@
 (defun wrydz/post-init-org()
   (with-eval-after-load 'org
     (progn
+      (org-indent-mode)
       (setq org-refile-use-outline-path 'file)
       (setq org-outline-path-complete-in-steps nil)
       (setq org-refile-targets
@@ -96,7 +114,7 @@
               (org-agenda-files :maxlevel . 4)))
       ;; (setq org-image-actual-width '(600))
 
-      (setq-default org-agenda-dir "~/org-notes")
+      (setq-default org-agenda-dir "~/Documents/org-notes")
       (setq org-agenda-file-note (expand-file-name "notes.org" org-agenda-dir))
       (setq org-agenda-file-gtd (expand-file-name "gtd.org" org-agenda-dir))
       (setq org-agenda-file-journal (expand-file-name "journal.org" org-agenda-dir))

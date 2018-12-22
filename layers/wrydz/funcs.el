@@ -2,7 +2,7 @@
   "create new file in work dir"
   (interactive "sPlease input file name or suffix : ")
   (progn
-    (setq work-dir-name "/home/wrydz/Work/sswk/worklog")
+    (setq work-dir-name "/Users/wrydz/Work/sswk/worklog")
     (cond ((string= "" (string-trim name-or-suffix))
            (setq temp-file-name (get-work-file-name-not-exists work-dir-name "log")))
           ((string= "." (substring name-or-suffix 0 1))
