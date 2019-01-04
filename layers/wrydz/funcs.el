@@ -2,7 +2,7 @@
   "create new file in work dir"
   (interactive "sPlease input file name or suffix : ")
   (progn
-    (setq work-dir-name "/home/wrydz/Work/sswk/worklog")
+    (setq work-dir-name "/Users/wrydz/Work/sswk/worklog")
     (cond ((string= "" (string-trim name-or-suffix))
            (setq temp-file-name (get-work-file-name-not-exists work-dir-name "log")))
           ((string= "." (substring name-or-suffix 0 1))
@@ -154,3 +154,26 @@
   (interactive)
   (call-process-shell-command "docker" nil nil nil nil
                               "run -d -p 3000:3000 pengxiao/netease-music-api"))
+
+
+(defun wrydz/replace_macro_to_value(date)
+  (interactive "sEnter date: ")
+  (let ((start-point-proces (if (use-region-p) (region-beginning) (point-min)))
+        (end-poin-procss (if (use-region-p) (region-end) (point-max)))
+        (save-point (point)))
+    (goto-char start-point-proces)
+    (while (and (search-forward-regexp "\\$[a-z0-9_.]+code\\$" nil t)
+                (<= (point) end-poin-procss))
+      (replace-match "510000"))
+    (goto-char start-point-proces)
+    (while (and (search-forward-regexp "\\$[a-z0-9_.]+date\\$" nil t)
+                (<= (point) end-poin-procss))
+      (replace-match (message "%s" date)))
+    (goto-char start-point-proces)
+    (while (and (search-forward-regexp "\\$" nil t)
+                (<= (point) end-poin-procss))
+      (backward-char 1)
+      (delete-char 1))
+  (goto-char save-point)))
+
+

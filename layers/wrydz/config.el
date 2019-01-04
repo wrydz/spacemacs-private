@@ -7,3 +7,5 @@
 
 (add-hook 'org-mode-hook 'iimage-mode)
 
+;; (add-hook 'sh-mode-hook #'lsp-sh-enable)
+
