@@ -32,14 +32,17 @@
 (defconst wrydz-packages
   '(
     youdao-dictionary
-    blog-admin
+    ;; blog-admin
     org
     org-pomodoro
     (sqlformat :location local)
-    (company-english-helper :location local)
-    (insert-translated-name :location local)
+    ;; (company-english-helper :location local)
+    ;; (insert-translated-name :location local)
     ;; (netease-music :location local)
     ;; (sqlformat :fetcher github :repo "steckerhalter/sqlformat.el")
+    scala-mode
+    sbt-mode
+    lsp-scala
     ))
 
 (defun wrydz/init-sqlformat()
@@ -49,19 +52,19 @@
     ))
 
 
-(defun wrydz/init-company-english-helper()
-  (use-package company-english-helper
-    :init
-    ;; (spacemacs/set-leader-keys "aec" 'toggle-company-english-helper)
-    (global-set-key (kbd "C-c e h") 'toggle-company-english-helper)
-    ))
+;; (defun wrydz/init-company-english-helper()
+;;   (use-package company-english-helper
+;;     :init
+;;     ;; (spacemacs/set-leader-keys "aec" 'toggle-company-english-helper)
+;;     (global-set-key (kbd "C-c e h") 'toggle-company-english-helper)
+;;     ))
 
-(defun wrydz/init-insert-translated-name()
-  (use-package insert-translated-name
-    :init
-    ;; (spacemacs/set-leader-keys "aet" 'insert-translated-name-insert)
-    (global-set-key (kbd "C-c e t") 'insert-translated-name-insert)
-    ))
+;; (defun wrydz/init-insert-translated-name()
+;;   (use-package insert-translated-name
+;;     :init
+;;     ;; (spacemacs/set-leader-keys "aet" 'insert-translated-name-insert)
+;;     (global-set-key (kbd "C-c e t") 'insert-translated-name-insert)
+;;     ))
 
 ;; (defun wrydz/init-netease-music()
 ;;   (use-package netease-music
@@ -73,16 +76,16 @@
 ;;       (setq netease-music-api "http://localhost:3000")
 ;;       )))
 
-(defun wrydz/init-blog-admin()
-  (use-package blog-admin
-    :init
-    (progn
-      (setq blog-admin-backend-path "~/static-blog")
-      (setq blog-admin-backend-type 'hexo)
-      (setq blog-admin-backend-new-post-in-drafts t) ;; create new post in drafts by default
-      (setq blog-admin-backend-new-post-with-same-name-dir t) ;; create same-name directory with new post
-      (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
-      )))
+;; (defun wrydz/init-blog-admin()
+;;   (use-package blog-admin
+;;     :init
+;;     (progn
+;;       (setq blog-admin-backend-path "~/static-blog")
+;;       (setq blog-admin-backend-type 'hexo)
+;;       (setq blog-admin-backend-new-post-in-drafts t) ;; create new post in drafts by default
+;;       (setq blog-admin-backend-new-post-with-same-name-dir t) ;; create same-name directory with new post
+;;       (add-hook 'blog-admin-backend-after-new-post-hook 'find-file)
+;;       )))
 
 (defun wrydz/init-youdao-dictionary()
   (use-package youdao-dictionary
@@ -172,7 +175,7 @@
                :empty-lines 1)
               ("s" "Code Snippet" entry (file org-agenda-file-code-snippet)
                "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")
-              ("w" "work" entry (file+headline org-agenda-file-gtd "Cocos2D-X")
+              ("w" "work" entry (file+headline org-agenda-file-gtd "wxwl")
                "* TODO [#A] %?\n  %i\n %U"
                :empty-lines 1)
               ("c" "Chrome" entry (file+headline org-agenda-file-note "Quick notes")
@@ -200,8 +203,48 @@
               ("W" "Weekly Review"
                ((stuck "") ;; review stuck projects as designated by org-stuck-projects
                 (tags-todo "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)
-                ))))
-      ))
-  )
+                )))))))
+
+
+;; Add melpa-stable to your packages repositories
+;;(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+
+;; Enable defer and ensure by default for use-package
+;;(setq use-package-always-defer t
+;;      use-package-always-ensure t)
+
+;; Enable scala-mode and sbt-mode
+;; (defun wrydz/init-scala-mode()
+;;   (use-package scala-mode
+;;     :mode "\\.s\\(cala\\|bt\\)$"))
+
+;; (defun wrydz/init-sbt-mode()
+;;   (use-package sbt-mode
+;;     :commands sbt-start sbt-command
+;;     :config
+;;     ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
+;;     ;; allows using SPACE when in the minibuffer
+;;     (substitute-key-definition
+;;      'minibuffer-complete-word
+;;      'self-insert-command
+;;      minibuffer-local-completion-map)))
+
+;; ;; (defun wrydz/init-eglot()
+;; ;;   (use-package eglot
+;; ;;     :pin melpa-stable
+;; ;;     :config
+;; ;;     (add-to-list 'eglot-server-programs '(scala-mode . ("metals-emacs")))
+;; ;;     ;; (optional) Automatically start metals for Scala files.
+;; ;;     :hook (scala-mode . eglot-ensure)))
+
+;; ;; Enable nice rendering of diagnostics like compile errors.
+;; (defun wrydz/init-lsp-scala()
+;;   (use-package lsp-scala
+;;     :after scala-mode
+;;     :demand t
+;;     ;; Optional - enable lsp-scala automatically in scala files
+;;     :hook (scala-mode . lsp)
+;;     :init (setq lsp-scala-server-command "metals-emacs")))
+
 
 ;;; packages.el ends here
