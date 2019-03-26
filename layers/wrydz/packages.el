@@ -40,9 +40,9 @@
     ;; (insert-translated-name :location local)
     ;; (netease-music :location local)
     ;; (sqlformat :fetcher github :repo "steckerhalter/sqlformat.el")
-    scala-mode
-    sbt-mode
-    lsp-scala
+    ;; scala-mode
+    ;; sbt-mode
+    ;; lsp-scala
     ))
 
 (defun wrydz/init-sqlformat()

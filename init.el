@@ -93,6 +93,7 @@ This function should only modify configuration layer settings."
             scala-use-unicode-arrows t
             scala-auto-start-ensime t
             )
+     (java :variables java-backend 'lsp)
      syntax-checking
      wrydz
      ;; version-control
