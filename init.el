@@ -78,7 +78,7 @@ This function should only modify configuration layer settings."
              python-sort-imports-on-save t
              python-backend 'lsp)
      (deft :variables
-       deft-directory "/home/wrydz/Documents/notes"
+       deft-directory "~/Documents/notes"
        deft-recursive t
        deft-extensions '("org" "md" "txt"))
      ;; shell-scripts
@@ -140,7 +140,7 @@ It should only modify the values of Spacemacs settings."
    ;; File path pointing to emacs 27.1 executable compiled with support
    ;; for the portable dumper (this is currently the branch pdumper).
    ;; (default "emacs-27.0.50")
-   dotspacemacs-emacs-pdumper-executable-file "emacs-27.0.50"
+   dotspacemacs-emacs-pdumper-executable-file "emacs"
 
    ;; Name of the Spacemacs dump file. This is the file will be created by the
    ;; portable dumper in the cache directory under dumps sub-directory.

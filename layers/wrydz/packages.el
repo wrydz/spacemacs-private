@@ -175,7 +175,7 @@
                :empty-lines 1)
               ("s" "Code Snippet" entry (file org-agenda-file-code-snippet)
                "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")
-              ("w" "work" entry (file+headline org-agenda-file-gtd "wxwl")
+              ("w" "work" entry (file+headline org-agenda-file-gtd "jwy")
                "* TODO [#A] %?\n  %i\n %U"
                :empty-lines 1)
               ("c" "Chrome" entry (file+headline org-agenda-file-note "Quick notes")
@@ -198,8 +198,8 @@
               ("wc" "不重要且紧急的任务" tags-todo "+PRIORITY=\"C\"")
               ("b" "Blog" tags-todo "BLOG")
               ("p" . "项目安排")
-              ("pw" tags-todo "PROJECT+WORK+CATEGORY=\"cocos2d-x\"")
-              ("pl" tags-todo "PROJECT+DREAM+CATEGORY=\"zilongshanren\"")
+              ("pw" tags-todo "PROJECT+WORK+CATEGORY=\"jwy\"")
+              ;; ("pl" tags-todo "PROJECT+DREAM+CATEGORY=\"zilongshanren\"")
               ("W" "Weekly Review"
                ((stuck "") ;; review stuck projects as designated by org-stuck-projects
                 (tags-todo "PROJECT") ;; review all projects (assuming you use todo keywords to designate projects)
