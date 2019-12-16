@@ -174,6 +174,15 @@
                 (<= (point) end-poin-procss))
       (backward-char 1)
       (delete-char 1))
-  (goto-char save-point)))
+    (goto-char save-point)))
 
 
+(defun wrydz/copy-content-win-clip(&optional text push)
+  (interactive)
+  (let ((start-point-proces (if (use-region-p) (region-beginning) (point-min)))
+        (end-poin-procss (if (use-region-p) (region-end) (point-max)))
+        (temp-file (make-temp-file "emacs-cli-tmp")))
+    (write-region start-point-proces end-poin-procss temp-file)
+    (call-process-shell-command (concat "/mnt/c/Windows/System32/clip.exe < " temp-file))
+    (delete-file temp-file)
+    ))
