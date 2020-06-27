@@ -36,6 +36,9 @@
     org
     org-pomodoro
     (sqlformat :location local)
+    (leetcode :location local)
+    request-deferred
+    graphql
     ;; (company-english-helper :location local)
     ;; (insert-translated-name :location local)
     ;; (netease-music :location local)
@@ -51,6 +54,18 @@
     (spacemacs/set-leader-keys "aff" 'sqlformat)
     ))
 
+(defun wrydz/init-request-deferred()
+  (use-package request-deferred))
+(defun wrydz/init-graphql()
+  (use-package graphql))
+
+(defun wrydz/init-leetcode()
+  (use-package leetcode
+    :init
+    (progn
+      (setq leetcode-account "wrydz")
+      (setq leetcode-password "126277wr!")
+      (setq leetcode-prefer-language "python3"))))
 
 ;; (defun wrydz/init-company-english-helper()
 ;;   (use-package company-english-helper
@@ -175,8 +190,14 @@
                :empty-lines 1)
               ("s" "Code Snippet" entry (file org-agenda-file-code-snippet)
                "* %?\t%^g\n#+BEGIN_SRC %^{language}\n\n#+END_SRC")
-              ("w" "work" entry (file+headline org-agenda-file-gtd "wxwl")
+              ("w" "work" entry (file+headline org-agenda-file-gtd "Company")
                "* TODO [#A] %?\n  %i\n %U"
+               :empty-lines 1)
+              ("d" "daily" entry (file+headline org-agenda-file-gtd "Daily")
+               "* TODO [#B] %?\n  %i\n %U"
+               :empty-lines 1)
+              ("p" "personal" entry (file+headline org-agenda-file-gtd "Personal")
+               "* TODO [#B] %?\n  %i\n %U"
                :empty-lines 1)
               ("c" "Chrome" entry (file+headline org-agenda-file-note "Quick notes")
                "* TODO [#C] %?\n %(zilongshanren/retrieve-chrome-current-tab-url)\n %i\n %U"
