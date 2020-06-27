@@ -9,3 +9,13 @@
 
 ;; (add-hook 'sh-mode-hook #'lsp-sh-enable)
 
+
+
+
+(unless window-system
+  (when (getenv "DISPLAY")
+    ;; Callback for when user cuts
+    ;; Attach callbacks to hooks
+    (setq interprogram-cut-function 'wrydz/copy-content-win-clip)
+    ))
+

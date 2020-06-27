@@ -7,3 +7,5 @@
 (global-set-key (kbd "C-c /") 'yas-expand)
 
 (global-set-key (kbd "C-c ;") 'spacemacs/helm-yas)
+
+;; (global-set-key (kbd "C-c ;") 'wrydz/copy-content-win-clip)
