@@ -36,7 +36,7 @@
     org
     org-pomodoro
     (sqlformat :location local)
-    (leetcode :location local)
+    ;; (leetcode :location local)
     ;; request-deferred
     ;; graphql
     ;; pyim
